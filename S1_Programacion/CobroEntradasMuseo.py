@@ -46,6 +46,7 @@ for i in range(visitantes):
         precio_final = precio_base-(precio_base*descuento)
         COBRO_TOTAL+=precio_final
         print(f"va a pagar: ${precio_final}")
+    print (f"total:${COBRO_TOTAL}")
         
 
         
