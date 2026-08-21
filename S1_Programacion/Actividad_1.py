@@ -1,0 +1,11 @@
+nombre=input("ingresa tu nombre ")
+hr1=float(input("cuantas horas pasas en redes sociales?"))
+hr2=float(input("cuantas horas pasas en mensajeria?"))
+hr3=float(input("cuantas horas pasas en streaming?"))
+hr4=float(input("cuantas horas pasas en videos?"))
+hr5=float(input("cuantas horas pasas en videojuegos?"))
+horas_totales=(hr1+hr2+hr3+hr4+hr5)
+porcentaje_del_dia=(horas_totales/24)*100
+print("usuario:", nombre)
+print(f"Tiempo total en plataformas: {horas_totales} horas")
+print(f"Porcentaje del día utilizado: {porcentaje_del_dia:.2f}%")
