@@ -1,5 +1,5 @@
 Algoritmo UsoPlataformasDigitales
-	// 1. Declaración de variables
+	// 1. DeclaraciÃ³n de variables
 	Definir nombre Como Cadena
 	Definir p1, p2, p3, p4, p5 Como Real
 	Definir total_horas, porcentaje Como Real
@@ -8,7 +8,7 @@ Algoritmo UsoPlataformasDigitales
 	Leer nombre
 	Escribir 'Horas en Redes Sociales:'
 	Leer p1
-	Escribir 'Horas en Mensajería:'
+	Escribir 'Horas en MensajerÃ­a:'
 	Leer p2
 	Escribir 'Horas en Streaming/Series:'
 	Leer p3
@@ -16,7 +16,7 @@ Algoritmo UsoPlataformasDigitales
 	Leer p4
 	Escribir 'Horas en Videojuegos:'
 	Leer p5
-	// 3. Procesamiento / Cálculos
+	// 3. Procesamiento / CÃ¡lculos
 	total_horas <- p1+p2+p3+p4+p5
 	porcentaje <- (total_horas/24)*100
 	// 4. Salida de resultados
