@@ -94,3 +94,13 @@ while True:
      continuacion=input("\nQuiere realizar otra cotizacion?\nPresiona Enter para continuar.\nReesponde NO, para cerrar el programa\n").upper()
      if continuacion=="NO":
         break
+Comparacion=input("\nQuieres comparar la rentabilidad de las rutas?\n").upper()
+if Comparacion=="SI":
+    if rentabilidad1>rentabilidad2 and rentabilidad1>rentabilidad3:
+        print("\n El que tiene un mayor margen es la Ruta Toluca-Queretaro\n " )
+    elif rentabilidad2>rentabilidad1 and rentabilidad2>rentabilidad3:
+        print(" \n El que tiene mayor margen es la Ruta Toluca-Oaxaca\n")
+    elif rentabilidad3>rentabilidad1 and rentabilidad3>rentabilidad2:
+        print("\n El que tiene mayor margen es la Ruta Toluca-Huatulco\n")
+elif Comparacion=="NO":
+    print("")
