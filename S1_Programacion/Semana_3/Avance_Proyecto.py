@@ -94,6 +94,7 @@ while True:
      continuacion=input("\nQuiere realizar otra cotizacion?\nPresiona Enter para continuar.\nReesponde NO, para cerrar el programa\n").upper()
      if continuacion=="NO":
         break
+    
 Comparacion=input("\nQuieres comparar la rentabilidad de las rutas?\n").upper()
 if Comparacion=="SI":
     if rentabilidad1>rentabilidad2 and rentabilidad1>rentabilidad3:
