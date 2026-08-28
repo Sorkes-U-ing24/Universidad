@@ -39,3 +39,58 @@ ganancia1=0
 ganancia2=0
 ganancia3=0
 
+# Codigo
+while True:
+     while True:
+        opcion_menu=int(input(" Que ruta vas a realizar? (\n1.Queretaro,\n2.Oaxaca,\n3.Huatulco)\n   "))
+        if opcion_menu >=4 or opcion_menu <=0:
+           print("Ruta no valida, ingrese una ruta correcta\n ")
+        else:   
+    
+           break  
+     Precio_diesel=float(input("A como esta el diesel el dia de hoy?\n "))
+        
+     if opcion_menu==1:
+      distancia_viaje1=(distancia1/recorrido)
+      gasto_diesel1=distancia_viaje1*Precio_diesel
+      gasto_chofer1=viaticos*viaje1
+      ganancia1=flete1-gasto_diesel1-(gasto_chofer1+sueldo_chofer1)
+      rentabilidad1=(ganancia1/flete1)*100
+      if rentabilidad1>=50:
+          print("\nRuta con excelente margen\n")
+      elif rentabilidad1>=40:
+          print("\nRuta con margen moderado\n")
+      elif rentabilidad1>=35:
+          print("\nRuta con margen bajo\n")    
+      print(f"La ganancia de esta ruta es: ${ganancia1:.2f} de {flete1} \n")
+        
+     elif opcion_menu==2:
+      distancia_viaje2=(distancia2/recorrido)
+      gasto_diesel2=distancia_viaje2*Precio_diesel
+      gasto_chofer2=viaticos*viaje2
+      ganancia2=flete2-gasto_diesel2-(gasto_chofer2+sueldo_chofer2)
+      rentabilidad2=(ganancia2/flete2)*100
+      if rentabilidad2>=50:
+          print("\nRuta con excelente margen\n")
+      elif rentabilidad2>=40:
+          print("\nRuta con margen moderado\n")
+      elif rentabilidad2>=35:
+          print("\nRuta con margen bajo\n") 
+      print(f"\nLa ganancia de esta ruta es: {ganancia2:.2f} de {flete2}\n")
+          
+     elif opcion_menu==3:   
+      distancia_viaje3=(distancia3/recorrido)
+      gasto_diesel3=distancia_viaje3*Precio_diesel
+      gasto_chofer3=viaticos*viaje3
+      ganancia3=flete3-gasto_diesel3-(gasto_chofer3+sueldo_chofer3)
+      rentabilidad3=(ganancia3/flete3)*100
+      if rentabilidad3>=50:
+          print("\nRuta con excelente margen\n")
+      elif rentabilidad3>=40:
+          print("\nRuta con margen moderado\n")
+      elif rentabilidad3>=35:
+          print("\nRuta con margen bajo\n") 
+      print(f"\nLa ganancia de esta ruta es: {ganancia3:.2f} de {flete3}\n")
+     continuacion=input("\nQuiere realizar otra cotizacion?\nPresiona Enter para continuar.\nReesponde NO, para cerrar el programa\n").upper()
+     if continuacion=="NO":
+        break
