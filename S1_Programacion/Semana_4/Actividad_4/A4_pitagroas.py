@@ -15,5 +15,15 @@ for i in range(1,11):
     for j in range(1,11):
         fila.append(i*j)
     tabla.append(fila)
-
+    
+#Primera funcion
+def imprimir_tabla(lgk):
+    print("\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t")
+    print("_"*83)
+    for i in range(len(lgk)):
+        print(f"{i+1} |\t", end="")
+        for j in range(len(lgk[i])):
+            print(f"{lgk[i][j]}", end="\t")
+        print("")           
+imprimir_tabla(tabla)
 
