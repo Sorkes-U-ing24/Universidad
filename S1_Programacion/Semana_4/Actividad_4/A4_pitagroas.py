@@ -27,3 +27,18 @@ def imprimir_tabla(lgk):
         print("")           
 imprimir_tabla(tabla)
 
+#Pido datos
+
+dato=int(input("ingresa un numero "))
+dato1=int(input("ingresa el otro numero "))
+
+
+#Segunda funcion con return
+def proceso_impresion(proceso, renglon, columna):
+    chocolate=(proceso[renglon-1][columna-1])
+    
+    return chocolate
+    
+
+chocolate=proceso_impresion(tabla, dato, dato1)
+print(f"{chocolate}")
