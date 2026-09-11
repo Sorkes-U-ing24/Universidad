@@ -53,5 +53,21 @@ def diccionario():
     telefono_encontrado = buscar_telefono(contactos, nombre_a_buscar)
     print(f"Teléfono de {nombre_a_buscar}: {telefono_encontrado}")
 
+#excepciones
+def excepciones():
+    
+
+    try:
+        num_excepcion1=int(input("ingresa un numero "))
+        num_excepcion2=int(input("ingresa un numero ")) 
+        suma_excepcion=num_excepcion1+num_excepcion2
+        division_excepcion=num_excepcion1/num_excepcion2
+        print(f"suma es {suma_excepcion}")
+        print(f"la division es {division_excepcion} ")
+    except ValueError:
+        print("ingresa un valor numerico ")
+    except ZeroDivisionError:
+        print("no puedes ingresar el valor 0 ")
+
 
     
