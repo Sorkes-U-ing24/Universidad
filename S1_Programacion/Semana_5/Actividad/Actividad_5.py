@@ -93,4 +93,29 @@ def strings():
 
     print(f"cantidad de palabras que contiene el nuevo mensaje {palabras_totales}")
 
-    
+
+#Menu
+def menu():
+    menu=0
+    while menu!="5":
+        print("----------MENU----------")
+        print("1. Ejercicio Tuplas ")
+        print("2. Ejercicio Diccionario")
+        print("3. Ejercicio Excepciones")
+        print("4. Ejercicio Strings")
+        print("5. Salir")
+        
+        menu=(input("Selecciones una opcion    "))
+        if menu=="1":
+            tuplas()
+        elif menu=="2":
+            diccionario()
+        elif menu=="3":
+            excepciones()
+        elif menu=="4":
+            strings()
+        elif menu=="5":
+            print("Saliendo del programa.............")
+        else:
+            print("Opcion no valida")
+menu()
