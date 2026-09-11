@@ -69,5 +69,28 @@ def excepciones():
     except ZeroDivisionError:
         print("no puedes ingresar el valor 0 ")
 
+#strings
+def strings():
+    mensaje=" maldito codigo castroso "
+
+    print(f"longitud del mensaje{len(mensaje)}")
+
+    mensaje_nuevo=mensaje.upper()
+
+    print(f" mensaje en mayusculas {mensaje_nuevo}")
+
+    mensaje_modificado= mensaje_nuevo.replace("MALDITO", "BENDITO").replace("CASTROSO", "RECONFORTANTE")
+
+    print(f"mensaje modificado {mensaje_modificado}")
+
+    def conteo(mensajito):
+        palabras= mensajito.split()
+        return len(palabras)
+
+    mensajito=input("ingresa un nuevo mensaje ")
+
+    palabras_totales=conteo(mensajito)
+
+    print(f"cantidad de palabras que contiene el nuevo mensaje {palabras_totales}")
 
     
