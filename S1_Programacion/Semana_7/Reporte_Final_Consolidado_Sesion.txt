@@ -6,3 +6,8 @@ OPERADOR          : Kol
 TOTAL SIMULACIONES: 0
 GANANCIA ACUMULADA: $0.00 MXN
 ================================================================================
+DETALLE DE OPERACIONES REALIZADAS EN LA SESIÓN:
+
+ [!] No se registraron simulaciones de viaje durante esta sesión.
+
+================================================================================
