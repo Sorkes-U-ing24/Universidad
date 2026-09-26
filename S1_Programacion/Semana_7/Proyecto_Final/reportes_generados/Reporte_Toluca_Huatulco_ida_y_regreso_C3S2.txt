@@ -1,0 +1,30 @@
+================================================================================
+REPORTE DE COSTOS Y GANANCIA NETA - TRANSPORTE
+================================================================================
+FECHA DE OPERACIÓN : 25/09/2026
+OPERADOR EN TURNO  : Sorkes_18
+================================================================================
+DETALLES DE LA RUTA:
+ - Ruta               : Toluca-Huatulco ida y regreso
+ - Distancia Total    : 1500.0 km
+ - Días Estimados     : 3 día(s)
+
+DETALLES DEL VEHÍCULO:
+ - Unidad             : C3S2
+ - Capacidad Tanque   : 120.0 Galones
+ - Rampa de Descarga  : SÍ (+25%)
+
+DESGLOSE FINANCIERO:
+ + Tarifa Base Ruta   : $42,000.00 MXN
+ + Recargo por Rampa  : $10,500.00 MXN
+ -------------------------------------------------------------------------------
+ = COBRO TOTAL CLIENTE: $52,500.00 MXN
+
+ - Pago al Chofer     : $6,600.00 MXN
+ - Consumo Diésel     : 535.71 L ($14,464.29 MXN)
+ -------------------------------------------------------------------------------
+ = COSTOS OPERATIVOS  : $21,064.29 MXN
+
+================================================================================
+GANANCIA NETA FINAL  : $31,435.71 MXN
+================================================================================

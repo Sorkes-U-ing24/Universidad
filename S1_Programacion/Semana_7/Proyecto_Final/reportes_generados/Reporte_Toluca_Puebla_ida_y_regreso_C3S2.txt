@@ -1,0 +1,30 @@
+================================================================================
+REPORTE DE COSTOS Y GANANCIA NETA - TRANSPORTE
+================================================================================
+FECHA DE OPERACIÓN : 25/09/2026
+OPERADOR EN TURNO  : Sorkes_18
+================================================================================
+DETALLES DE LA RUTA:
+ - Ruta               : Toluca-Puebla ida y regreso
+ - Distancia Total    : 360.0 km
+ - Días Estimados     : 1 día(s)
+
+DETALLES DEL VEHÍCULO:
+ - Unidad             : C3S2
+ - Capacidad Tanque   : 200.0 Galones
+ - Rampa de Descarga  : NO
+
+DESGLOSE FINANCIERO:
+ + Tarifa Base Ruta   : $12,500.00 MXN
+ + Recargo por Rampa  : $0.00 MXN
+ -------------------------------------------------------------------------------
+ = COBRO TOTAL CLIENTE: $12,500.00 MXN
+
+ - Pago al Chofer     : $1,575.00 MXN
+ - Consumo Diésel     : 122.14 L ($3,297.86 MXN)
+ -------------------------------------------------------------------------------
+ = COSTOS OPERATIVOS  : $4,872.86 MXN
+
+================================================================================
+GANANCIA NETA FINAL  : $7,627.14 MXN
+================================================================================
