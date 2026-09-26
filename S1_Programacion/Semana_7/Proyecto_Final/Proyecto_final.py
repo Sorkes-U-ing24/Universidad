@@ -1,4 +1,3 @@
-
 import os
 import sys
 import time
@@ -90,7 +89,7 @@ def autenticar_usuario_blindado():
     operador_nombre = None
 
     print("\n" + "=" * 80)
-    print(" SISTEMA DE AUTOMATIZACIÓN DE COSTOS Y GANANCIAS - TRANSPORTE MÉXICO ".center(80, "="))
+    print(" TRANSPORTES PERALTA - AUTOMATIZACIÓN DE COSTOS Y GANANCIAS (WALDO'S) ".center(80, "="))
     print("=" * 80)
 
     while not acceso_concedido and intentos_restantes > 0:
@@ -247,7 +246,7 @@ def pantalla_carga(segundos=5, mensaje_proceso="Procesando"):
 def mostrar_bienvenida(operador_nombre, credencial_activa):
     marco = "=" * 80
     print(marco)
-    print("SUITE INTEGRAL DE AUTOMATIZACIÓN Y LOGÍSTICA DE TRANSPORTE".center(80))
+    print("TRANSPORTES PERALTA - SISTEMA DE CONTROL LOGÍSTICO Y COSTOS".center(80))
     print(f"BIENVENIDO/A: {operador_nombre.upper()} | CREDENCIAL: [{credencial_activa}]".center(80))
     print(marco)
     pantalla_carga(segundos=5, mensaje_proceso="Inicializando ambiente de trabajo")
@@ -294,7 +293,7 @@ def guardar_reporte_viaje_automatico(operador, fecha_tupla, ruta_info, camion_in
     filename = os.path.join(REPORTES_DIR, f"Reporte_{nombre_clean}_{camion_info['config']}.txt")
 
     contenido = f"""================================================================================
-REPORTE DE COSTOS Y GANANCIA NETA - TRANSPORTE
+REPORTE DE COSTOS Y GANANCIA NETA - TRANSPORTES PERALTA
 ================================================================================
 FECHA DE OPERACIÓN : {fecha_str}
 OPERADOR EN TURNO  : {operador}
@@ -344,7 +343,7 @@ def generar_reporte_final_sesion(operador, fecha_tupla, historial_simulaciones):
     ganancia_acumulada = sum(item['res']['ganancia_neta'] for item in historial_simulaciones)
 
     contenido = f"""================================================================================
-REPORTE CONSOLIDADO FINAL DE LA SESIÓN
+REPORTE CONSOLIDADO FINAL DE LA SESIÓN - TRANSPORTES PERALTA
 ================================================================================
 FECHA DE EMISIÓN  : {fecha_str}
 OPERADOR          : {operador}
@@ -386,7 +385,7 @@ def obtener_matriz_menu():
 
 def mostrar_menu_matriz(matriz):
     print("\n" + "=" * 80)
-    print(" MENÚ PRINCIPAL DE OPERACIONES (MATRIZ DE OPCIONES) ".center(80, "="))
+    print(" MENÚ PRINCIPAL DE OPERACIONES (TRANSPORTES PERALTA) ".center(80, "="))
     print("=" * 80)
     print(f"{'ID':<5} | {'OPCIÓN':<28} | {'DESCRIPCIÓN':<35}")
     print("-" * 80)
@@ -405,7 +404,7 @@ def sub_menu_simular(operador, fecha_tupla, historial, activar_debug=False):
         print(f"    Verifique que 'Rutas.txt' y 'Camiones.txt' tengan datos guardados (Ctrl + S).")
         return
 
-    print("\n--- RUTAS DISPONIBLES ---")
+    print("\n--- RUTAS DISPONIBLES (WALDO'S) ---")
     for id_r, r in rutas.items():
         print(f"[{id_r}] {r['nombre']} | {r['km']} km | Tarifa Base: ${r['pago_ruta']:,.2f}")
 
@@ -415,7 +414,7 @@ def sub_menu_simular(operador, fecha_tupla, historial, activar_debug=False):
             break
         print("[!] Error: ID de ruta inexistente. Ingrese un ID válido de la lista.")
 
-    print("\n--- CAMIONES DISPONIBLES ---")
+    print("\n--- CAMIONES DISPONIBLES (TRANSPORTES PERALTA) ---")
     for id_c, c in camiones.items():
         rampa_txt = "SÍ (+25%)" if c['tiene_rampa'] else "NO"
         print(f"[{id_c}] Configuración: {c['config']} | Tanque: {c['tanque_galones']} Gal | Rampa: {rampa_txt}")
@@ -558,5 +557,4 @@ def ejecutar_sistema_completo():
 
 
 if __name__ == "__main__":
-    ejecutar_sistema_completo() 
-
+    ejecutar_sistema_completo()
