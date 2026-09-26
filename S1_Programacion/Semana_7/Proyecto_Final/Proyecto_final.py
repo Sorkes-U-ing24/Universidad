@@ -330,5 +330,233 @@ GANANCIA NETA FINAL  : ${res['ganancia_neta']:,.2f} MXN
         print(f"\n[✓] REPORTE INDIVIDUAL GENERADO AUTOMÁTICAMENTE EN:\n    {filename}")
     except Exception as e:
         print(f"[!] Error al escribir el reporte individual: {e}")
+        
+# El reporte consolidado de cierre. Se dispara si le das a la opción 4 de salir o si 
+# te saca por inactividad. Suma todas las ganancias de los viajes que simulaste en el turno.
+def generar_reporte_final_sesion(operador, fecha_tupla, historial_simulaciones):
+    if not os.path.exists(REPORTES_DIR):
+        os.makedirs(REPORTES_DIR)
 
+    fecha_str = formatear_fecha_tupla(fecha_tupla)
+    filename = os.path.join(REPORTES_DIR, "Reporte_Final_Consolidado_Sesion.txt")
+
+    total_viajes = len(historial_simulaciones)
+    ganancia_acumulada = sum(item['res']['ganancia_neta'] for item in historial_simulaciones)
+
+    contenido = f"""================================================================================
+REPORTE CONSOLIDADO FINAL DE LA SESIÓN
+================================================================================
+FECHA DE EMISIÓN  : {fecha_str}
+OPERADOR          : {operador}
+TOTAL SIMULACIONES: {total_viajes}
+GANANCIA ACUMULADA: ${ganancia_acumulada:,.2f} MXN
+================================================================================
+DETALLE DE OPERACIONES REALIZADAS EN LA SESIÓN:
+"""
+    if total_viajes == 0:
+        contenido += "\n [!] No se registraron simulaciones de viaje durante esta sesión."
+    else:
+        for idx, item in enumerate(historial_simulaciones, start=1):
+            r = item['ruta']
+            c = item['camion']
+            res = item['res']
+            contenido += f"\n [{idx}] Ruta: {r['nombre']:<30} | Camión: {c['config']:<6} | Ganancia Neta: ${res['ganancia_neta']:,.2f} MXN"
+
+    contenido += "\n\n================================================================================"
+
+    try:
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(contenido)
+        pantalla_carga(segundos=5, mensaje_proceso="Emitiendo Reporte Final Consolidado")
+        print(f"[✓] REPORTE FINAL CONSOLIDADO EMITIDO CON ÉXITO EN:\n    {filename}\n")
+    except Exception as e:
+        print(f"[!] Error al emitir el reporte final: {e}")
+
+
+# Construye y despliega el menú en formato de matriz de 2D. Recorre las filas y columnas 
+# con ciclos anidados para que las opciones y descripciones queden alineaditas en pantalla.
+def obtener_matriz_menu():
+    return [
+        ["1", "Simular Viaje y Ganancia", "Calcular costos y rentabilidad"],
+        ["2", "Ver Archivos de Texto", "Inspeccionar catálogos o reportes"],
+        ["3", "Depuración Técnica (PDB)", "Ejecutar simulación con debugger"],
+        ["4", "Salir del Sistema", "Emitir reporte final y cerrar sesión"]
+    ]
+
+
+def mostrar_menu_matriz(matriz):
+    print("\n" + "=" * 80)
+    print(" MENÚ PRINCIPAL DE OPERACIONES (MATRIZ DE OPCIONES) ".center(80, "="))
+    print("=" * 80)
+    print(f"{'ID':<5} | {'OPCIÓN':<28} | {'DESCRIPCIÓN':<35}")
+    print("-" * 80)
+    for fila in matriz:
+        linea = f"[{fila[0]}]".ljust(6) + f"| {fila[1]}".ljust(30) + f"| {fila[2]}"
+        print(linea)
+    print("=" * 80)
+
+
+def sub_menu_simular(operador, fecha_tupla, historial, activar_debug=False):
+    rutas = cargar_rutas_blindado()
+    camiones = cargar_camiones_blindado()
+
+    if not rutas or not camiones:
+        print("\n[!] ERROR CRÍTICO: No se encontraron los archivos maestros de datos o están vacíos (0 KB).")
+        print(f"    Verifique que 'Rutas.txt' y 'Camiones.txt' tengan datos guardados (Ctrl + S).")
+        return
+
+    print("\n--- RUTAS DISPONIBLES ---")
+    for id_r, r in rutas.items():
+        print(f"[{id_r}] {r['nombre']} | {r['km']} km | Tarifa Base: ${r['pago_ruta']:,.2f}")
+
+    while True:
+        id_r = input("\nSeleccione el ID de la ruta deseada: ").strip()
+        if id_r in rutas:
+            break
+        print("[!] Error: ID de ruta inexistente. Ingrese un ID válido de la lista.")
+
+    print("\n--- CAMIONES DISPONIBLES ---")
+    for id_c, c in camiones.items():
+        rampa_txt = "SÍ (+25%)" if c['tiene_rampa'] else "NO"
+        print(f"[{id_c}] Configuración: {c['config']} | Tanque: {c['tanque_galones']} Gal | Rampa: {rampa_txt}")
+
+    while True:
+        id_c = input("\nSeleccione el ID del camión asignado: ").strip()
+        if id_c in camiones:
+            break
+        print("[!] Error: ID de camión inexistente. Ingrese un ID válido de la lista.")
+
+    while True:
+        try:
+            precio_input = input("\nIngrese el precio actual por litro de diésel ($ MXN): ").strip()
+            precio_diesel = float(precio_input)
+            if precio_diesel <= 0:
+                print("[!] El precio debe ser un número mayor a cero.")
+                continue
+            break
+        except ValueError:
+            print("[!] Entrada inválida. Ingrese un valor decimal válido (ej. 24.50).")
+
+    pantalla_carga(segundos=5, mensaje_proceso="Calculando estructura financiera")
+    res = calcular_viaje_blindado(rutas[id_r], camiones[id_c], precio_diesel, activar_debug=activar_debug)
+
+    print("\n" + "=" * 50)
+    print(" RESULTADO DE LA SIMULACIÓN ".center(50, "="))
+    print("=" * 50)
+    print(f" Cobro Total Cliente : ${res['cobro_total']:,.2f} MXN")
+    print(f" Costos Operativos   : ${res['costos_totales']:,.2f} MXN")
+    print(f" GANANCIA NETA ESTIMADA: ${res['ganancia_neta']:,.2f} MXN")
+    print("=" * 50)
+
+    guardar_reporte_viaje_automatico(operador, fecha_tupla, rutas[id_r], camiones[id_c], res)
+    historial.append({"ruta": rutas[id_r], "camion": camiones[id_c], "res": res})
+
+# El visor de archivos de texto. Lista los .txt que pesan más de 0 KB y cuando abres uno 
+# te imprime un encabezado explicando qué significa cada columna para que el profe no se pierda.
+def sub_menu_ver_archivos():
+    while True:
+        archivos = {}
+        
+        if os.path.exists(RUTA_RUTAS) and os.path.getsize(RUTA_RUTAS) > 0:
+            archivos["1"] = RUTA_RUTAS
+        if os.path.exists(RUTA_CAMIONES) and os.path.getsize(RUTA_CAMIONES) > 0:
+            archivos["2"] = RUTA_CAMIONES
+
+        idx = 3
+        if os.path.exists(REPORTES_DIR):
+            for f in sorted(os.listdir(REPORTES_DIR)):
+                if f.endswith('.txt'):
+                    path_rep = os.path.join(REPORTES_DIR, f)
+                    if os.path.getsize(path_rep) > 0:
+                        archivos[str(idx)] = path_rep
+                        idx += 1
+
+        print("\n--- ARCHIVOS DE TEXTO REGISTRADOS EN DISCO ---")
+        if not archivos:
+            print("[!] Advertencia: Los archivos maestros están vacíos (0 KB) o no existen.")
+            print("    Asegúrese de guardar los datos en 'Rutas.txt' y 'Camiones.txt' con Ctrl + S.")
+            input("\nPresione ENTER para regresar al menú principal...")
+            break
+
+        for k, v in archivos.items():
+            nombre_mostrar = os.path.basename(v)
+            print(f"[{k}] {nombre_mostrar} ({v})")
+
+        opcion = input("\nSeleccione el ID del archivo a visualizar (o presione ENTER para volver al menú): ").strip()
+
+        if opcion == "":
+            break
+
+        if opcion in archivos:
+            archivo_destino = archivos[opcion]
+            try:
+                pantalla_carga(segundos=5, mensaje_proceso="Cargando contenido del archivo")
+                print("\n" + "=" * 80)
+                print(f" CONTENIDO DEL ARCHIVO: {os.path.basename(archivo_destino)} ".center(80, "="))
+                print("=" * 80)
+                
+                if archivo_destino == RUTA_RUTAS:
+                    print("ESTRUCTURA DE DATOS (RUTAS MAESTRO):")
+                    print("[ID] | [Nombre de Ruta] | [Distancia KM] | [Tarifa Cliente $] | [Días] | [Pago Base Chofer $]")
+                    print("-" * 80)
+                elif archivo_destino == RUTA_CAMIONES:
+                    print("ESTRUCTURA DE DATOS (CAMIONES MAESTRO):")
+                    print("[ID] | [Config] | [Tanque Gal] | [Factor Chofer] | [Factor Diésel] | [Rampa 1/0] | [Recargo %]")
+                    print("-" * 80)
+
+                with open(archivo_destino, 'r', encoding='utf-8') as f:
+                    contenido = f.read()
+                    print(contenido)
+                
+                print("=" * 80)
+                input("\nPresione ENTER para continuar...")
+                break
+            except Exception as e:
+                print(f"[!] Error al leer el archivo: {e}")
+                break
+        else:
+            print(f"\n[!] Error: La opción '[{opcion}]' no es válida. Seleccione una opción de la lista.")
+
+# La función orquestadora principal. Es la que manda a llamar a todas las demás en orden:
+# login -> bienvenida -> captura de fecha -> ciclo infinito del menú.
+def ejecutar_sistema_completo():
+    credencial, operador = autenticar_usuario_blindado()
+    if not operador:
+        return
+
+    mostrar_bienvenida(operador, credencial)
+    fecha_operacion = solicitar_fecha_operacion_blindada()
+
+    matriz_menu = obtener_matriz_menu()
+    historial_sesion = []
+
+    while True:
+        mostrar_menu_matriz(matriz_menu)
+        
+        opcion = solicitar_entrada_con_inactividad("\nSeleccione una opción de la matriz [1-4]: ", segundos_limite=600)
+
+        if opcion == "REINTENTAR":
+            continue
+        elif opcion == "TIMEOUT_SALIR":
+            generar_reporte_final_sesion(operador, fecha_operacion, historial_sesion)
+            print(f"Cierre automático por inactividad ejecutado para el operador: {operador}.")
+            break
+
+        if opcion == "1":
+            sub_menu_simular(operador, fecha_operacion, historial_sesion, activar_debug=False)
+        elif opcion == "2":
+            sub_menu_ver_archivos()
+        elif opcion == "3":
+            print("\n[!] MODO DEBUGGING ACTIVADO (PDB)")
+            sub_menu_simular(operador, fecha_operacion, historial_sesion, activar_debug=True)
+        elif opcion == "4":
+            generar_reporte_final_sesion(operador, fecha_operacion, historial_sesion)
+            print(f"Cierre de sesión finalizado. Operador: {operador}. ¡Hasta pronto!")
+            break
+        else:
+            print("\n[!] Opción no válida. Ingrese un ID numérico de la matriz (1, 2, 3 o 4).")
+
+
+if __name__ == "__main__":
+    ejecutar_sistema_completo() 
 
